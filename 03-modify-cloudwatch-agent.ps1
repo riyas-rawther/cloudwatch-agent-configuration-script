@@ -1,0 +1,1 @@
+C:\Program Files\Amazon\AmazonCloudWatchAgent\amazon-cloudwatch-agent-ctl.ps1 -a fetch-config -m ec2 -c file:.\amazon-cloudwatch-agent.json -s
