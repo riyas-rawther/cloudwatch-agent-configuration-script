@@ -1,6 +1,5 @@
 $windowsLogs = @("Application", "System", "Security")
 $windowsLoglevel = @("ERROR", "INFORMATION")
-$instance = hostname
 $iissites = Get-Website | Where-Object {$_.Name -ne "Default Web Site"}
 
 #setting current working path to get scripts and json files
@@ -16,7 +15,7 @@ $iislogs = @()
 foreach ($site in $iissites) {
     $iislog = @{
         file_path = "$backuppath\$($site.name)\W3SVC$($site.id)\*.log"
-        log_group_name = "/iis/$instance"
+        log_group_name = "/iis/$varhostname"
         log_stream_name = $($site.Name.ToLower())
         timestamp_format = "%Y-%m-%d %H:%M:%S"
         timezone = "UTC"
@@ -32,7 +31,7 @@ foreach ($event in $windowsLogs) {
         event_levels = $windowsLoglevel
         event_format ="text"
         log_group_name = "/eventlog/$($event.ToLower())"
-        log_stream_name = $instance
+        log_stream_name = $varhostname
     }
     $winlogs += $winlog
 }
