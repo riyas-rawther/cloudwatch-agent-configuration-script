@@ -1,0 +1,51 @@
+{
+  "metrics": {
+		"aggregation_dimensions": [
+			[
+				"InstanceId"
+			]
+		],
+		"append_dimensions": {
+			"AutoScalingGroupName": "${aws:AutoScalingGroupName}",
+			"ImageId": "${aws:ImageId}",
+			"InstanceId": "${aws:InstanceId}",
+			"InstanceType": "${aws:InstanceType}"
+		},
+		"metrics_collected": {
+			"LogicalDisk": {
+				"measurement": [{
+						"name": "% Free Space",
+						"rename": "FreeStorageSpaceInPercent",
+						"unit": "Percent"
+					},
+					{
+						"name": "Free Megabytes",
+						"rename": "FreeStorageSpaceInMB",
+						"unit": "Megabytes"
+					},
+					{
+						"name": "used_percent",
+						"rename": "UsedDiskSpaceInPercent",
+						"unit": "Percent"
+					}
+				],
+				"metrics_collection_interval": 10,
+				"resources": [
+					"*"
+				]
+			},
+			"Memory": {
+				"measurement": [
+					"% Committed Bytes In Use"
+				],
+				"metrics_collection_interval": 60
+			},
+			"statsd": {
+				"metrics_aggregation_interval": 60,
+				"metrics_collection_interval": 10,
+				"service_address": ":8125"
+			}
+		}
+
+	}
+}

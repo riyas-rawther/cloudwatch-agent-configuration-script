@@ -2,13 +2,20 @@ $windowsLogs = @("Application", "System", "Security")
 $windowsLoglevel = @("ERROR", "INFORMATION")
 $instance = hostname
 $iissites = Get-Website | Where-Object {$_.Name -ne "Default Web Site"}
-$configfile = "C:\Program Files\Amazon\AmazonCloudWatchAgent\amazon-cloudwatch-agent.json"
 
+#setting current working path to get scripts and json files
+$scriptpath = $MyInvocation.MyCommand.Path
+$dir = Split-Path $scriptpath
+
+# reading and creating dynamic key value strings
+Foreach ($i in $(Get-Content $dir/config.env)){
+    Set-Variable -Name $i.split("=")[0] -Value $i.split("=",2)[1]
+}
 
 $iislogs = @()
 foreach ($site in $iissites) {
     $iislog = @{
-        file_path = "C:\logs\IIS-LogFiles\$($site.id)\*.log"
+        file_path = "$backuppath\$($site.id)\*.log"
         log_group_name = "/iis/$instance"
         log_stream_name = $($site.Name.ToLower())
         timestamp_format = "%Y-%m-%d %H:%M:%S"
@@ -48,13 +55,13 @@ $config = @{
 # this could be any other location as long as it’s absolute
 
  
-$json = $config | ConvertTo-Json -Depth 10 | Out-File .\acwa-logs.json
+$json = $config | ConvertTo-Json -Depth 10 | Out-File $dir\json\acwa-logs.json
 
-Write-Host "Merging two jsosn"
+Write-Host "Merging two json"
 
-$data1 = Get-Content .\acwa-logs.json -Raw | ConvertFrom-Json 
-$data2 = Get-Content .\acwa-matrices.json -Raw | ConvertFrom-Json 
+$data1 = Get-Content $dir\json\acwa-logs.json -Raw | ConvertFrom-Json 
+$data2 = Get-Content $dir\json\acwa-matrices.json -Raw | ConvertFrom-Json 
 
-@($data1; $data2) | ConvertTo-Json -Depth 10  | Out-File .\amazon-cloudwatch-agent.json
+@($data1; $data2) | ConvertTo-Json -Depth 10  | Out-File $dir\json\amazon-cloudwatch-agent.json
 
  
