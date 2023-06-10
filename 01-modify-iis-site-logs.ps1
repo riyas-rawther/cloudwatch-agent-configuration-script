@@ -10,7 +10,8 @@ Foreach ($i in $(Get-Content $dir/config.env)){
 }
 
 #take IIS site config backup
-Backup-WebConfiguration -Name myIISBackup
+$fileDateTime = $(get-date -f "MM_dd_yyyy__HH_mm_ss")
+Backup-WebConfiguration -Name myIISBackup_$fileDateTime
 #C:\Windows\System32\inetsrv\backup
 #Restore-WebConfiguration -Name myIISBackup
 
@@ -21,7 +22,7 @@ $LogPath = $backuppath
 foreach($site in (dir iis:\sites\*))
 {
 New-Item $LogPath\$($site.Name) -type directory
-Set-ItemProperty IIS:\Sites\$($site.Name) -name logFile.directory -value "$LogPath\$($site.Name)”
+Set-ItemProperty IIS:\Sites\$($site.Name) -name logFile.directory -value "$LogPath\$($site.Name)"
 Set-ItemProperty IIS:\Sites\$($site.Name) -name logFile.truncateSize -value "10485760"
 Set-ItemProperty IIS:\Sites\$($site.Name) -name logfile.logTargetW3C  -Value "File,ETW"
 ## (Get-ItemProperty 'IIS:\Sites\Default Web Site\' -Name logfile).logExtFileFlags
