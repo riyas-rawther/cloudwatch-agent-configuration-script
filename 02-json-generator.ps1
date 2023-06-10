@@ -15,7 +15,7 @@ Foreach ($i in $(Get-Content $dir/config.env)){
 $iislogs = @()
 foreach ($site in $iissites) {
     $iislog = @{
-        file_path = "$backuppath\$($site.id)\*.log"
+        file_path = "$backuppath\$($site.name)\W3SVC$($site.id)\*.log"
         log_group_name = "/iis/$instance"
         log_stream_name = $($site.Name.ToLower())
         timestamp_format = "%Y-%m-%d %H:%M:%S"
