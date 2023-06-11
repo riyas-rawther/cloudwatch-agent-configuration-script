@@ -22,7 +22,17 @@ foreach ($site in $iissites) {
         encoding = "utf-8"
         retention_in_days = $iislogretention
     }
-    $iislogs += $iislog
+    $iisErrLog = @{
+        file_path = "C:/Windows/System32/LogFiles/HTTPERR/*.log"
+        log_group_name = "/iis/$varhostname"
+        log_stream_name = "httpErrors"
+        timestamp_format = "%Y-%m-%d %H:%M:%S"
+        timezone = "UTC"
+        encoding = "utf-8"
+        retention_in_days = $iislogretention
+    }
+    $iislogs += $iislog 
+    $iislogs += $iisErrLog
 }
  
 $winlogs = @()
@@ -31,7 +41,7 @@ foreach ($event in $windowsLogs) {
         event_name = $event
         event_levels = $windowsLoglevel
         event_format ="text"
-        log_group_name = "/eventlog/$($event.ToLower())"
+        log_group_name = "/eventlog/$environment/$($event.ToLower())"
         log_stream_name = $varhostname
         retention_in_days = $winlogretention
         
@@ -57,7 +67,7 @@ $config = @{
 # this could be any other location as long as it’s absolute
 
  
-# $json = $config | ConvertTo-Json -Depth 10 | Out-File $dir\json\acwa-logs.json
+$json = $config | ConvertTo-Json -Depth 10 | Out-File $dir\json\acwa-logs.json
 
 # Write-Host "Merging two json"
 
