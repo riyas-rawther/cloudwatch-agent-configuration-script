@@ -33,7 +33,7 @@ Set-ItemProperty IIS:\Sites\$($site.Name) -Name logfile -Value @{logExtFileFlags
 
 if ($xforwarded -eq "true") 
 {
-## Enabling X-Forwarded-For for Loadbalancer
+Write-Host "Enabling X-Forwarded-For logging option for Loadbalancer"
 Add-WebConfigurationProperty -PSPath 'MACHINE/WEBROOT/APPHOST' `
      -Filter "system.applicationHost/sites/siteDefaults/logFile/customFields" `
      -Name "." `
