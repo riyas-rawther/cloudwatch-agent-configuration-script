@@ -20,7 +20,7 @@ foreach ($site in $iissites) {
         timestamp_format = "%Y-%m-%d %H:%M:%S"
         timezone = "UTC"
         encoding = "utf-8"
-        retention_in_days = 3
+        retention_in_days = $iislogretention
     }
     $iislogs += $iislog
 }
@@ -33,7 +33,7 @@ foreach ($event in $windowsLogs) {
         event_format ="text"
         log_group_name = "/eventlog/$($event.ToLower())"
         log_stream_name = $varhostname
-        retention_in_days = 3
+        retention_in_days = $winlogretention
     }
     $winlogs += $winlog
 }
