@@ -9,3 +9,30 @@
 > copy the manupulated file to this dir   
 > Shift right click and open the Powershell.   
 >  ./amazon-cloudwatch-agent-ctl.ps1 -a fetch-config -m ec2 -c file:./jsonamazon-cloudwatch-agent.json -s   
+
+# Retention in days
+
+| Days |
+|------|
+| -1   |
+| 1    |
+| 3    |
+| 5    |
+| 7    |
+| 14   |
+| 30   |
+| 60   |
+| 90   |
+| 120  |
+| 150  |
+| 180  |
+| 365  |
+| 400  |
+| 545  |
+| 731  |
+| 1827 |
+| 2192 |
+| 2557 |
+| 2922 |
+| 3288 |
+| 3653 |
