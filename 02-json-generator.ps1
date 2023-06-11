@@ -1,5 +1,5 @@
 $windowsLogs = @("Application", "System", "Security")
-$windowsLoglevel = @("ERROR", "INFORMATION")
+$windowsLoglevel = @("ERROR", "WARNING","CRITICAL")
 $iissites = Get-Website | Where-Object {$_.Name -ne "Default Web Site"}
 
 #setting current working path to get scripts and json files
@@ -34,6 +34,7 @@ foreach ($event in $windowsLogs) {
         log_group_name = "/eventlog/$($event.ToLower())"
         log_stream_name = $varhostname
         retention_in_days = $winlogretention
+        
     }
     $winlogs += $winlog
 }
