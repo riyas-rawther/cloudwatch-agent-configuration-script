@@ -20,6 +20,7 @@ foreach ($site in $iissites) {
         timestamp_format = "%Y-%m-%d %H:%M:%S"
         timezone = "UTC"
         encoding = "utf-8"
+        retention_in_days = 3
     }
     $iislogs += $iislog
 }
@@ -32,6 +33,7 @@ foreach ($event in $windowsLogs) {
         event_format ="text"
         log_group_name = "/eventlog/$($event.ToLower())"
         log_stream_name = $varhostname
+        retention_in_days = 3
     }
     $winlogs += $winlog
 }
@@ -54,13 +56,13 @@ $config = @{
 # this could be any other location as long as it’s absolute
 
  
-$json = $config | ConvertTo-Json -Depth 10 | Out-File $dir\json\acwa-logs.json
+# $json = $config | ConvertTo-Json -Depth 10 | Out-File $dir\json\acwa-logs.json
 
-Write-Host "Merging two json"
+# Write-Host "Merging two json"
 
-$data1 = Get-Content $dir\json\acwa-logs.json -Raw | ConvertFrom-Json 
-$data2 = Get-Content $dir\json\acwa-matrices.json -Raw | ConvertFrom-Json 
+# $data1 = Get-Content $dir\json\acwa-logs.json -Raw | ConvertFrom-Json 
+# $data2 = Get-Content $dir\json\acwa-matrices.json -Raw | ConvertFrom-Json 
 
-@($data1; $data2) | ConvertTo-Json -Depth 10  | Out-File $dir\json\amazon-cloudwatch-agent.json
+# @($data1; $data2) | ConvertTo-Json -Depth 10  | Out-File $dir\json\amazon-cloudwatch-agent.json
 
  
