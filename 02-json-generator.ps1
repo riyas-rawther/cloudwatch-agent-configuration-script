@@ -20,7 +20,7 @@ foreach ($site in $iissites) {
         timestamp_format = "%Y-%m-%d %H:%M:%S"
         timezone = "UTC"
         encoding = "utf-8"
-        retention_in_days = $iislogretention
+        retention_in_days = [int]$iislogretention
     }
     $iisErrLog = @{
         file_path = "C:/Windows/System32/LogFiles/HTTPERR/*.log"
@@ -29,7 +29,7 @@ foreach ($site in $iissites) {
         timestamp_format = "%Y-%m-%d %H:%M:%S"
         timezone = "UTC"
         encoding = "utf-8"
-        retention_in_days = $iislogretention
+        retention_in_days = [int]$iislogretention
     }
     $iislogs += $iislog 
     $iislogs += $iisErrLog
@@ -43,7 +43,7 @@ foreach ($event in $windowsLogs) {
         event_format ="text"
         log_group_name = "/eventlog/$environment/$($event.ToLower())"
         log_stream_name = $varhostname
-        retention_in_days = $winlogretention
+        retention_in_days = [int]$winlogretention
         
     }
     $winlogs += $winlog
