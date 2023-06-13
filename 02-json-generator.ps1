@@ -1,7 +1,6 @@
-import-Module WebAdministration
 $windowsLogs = @("Application", "System", "Security")
 $windowsLoglevel = @("ERROR", "WARNING","CRITICAL")
-$iissites = Get-Website | Where-Object {$_.Name -ne "Default Web Site" -and  $_.State -ne "Stopped"} 
+$iissites = Get-Website | Where-Object {$_.Name -ne "Default Web Site"}
 
 #setting current working path to get scripts and json files
 $scriptpath = $MyInvocation.MyCommand.Path
