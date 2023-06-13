@@ -16,7 +16,7 @@ $iislogs = @()
 foreach ($site in $iissites) {
     $iislog = @{
         file_path = "$backuppath\$($site.name)\W3SVC$($site.id)\*.log"
-        log_group_name = "/iis/$varhostname"
+        log_group_name = "DevSecOps/iis/$varhostname"
         log_stream_name = $($site.Name.ToLower())
         timestamp_format = "%Y-%m-%d %H:%M:%S"
         timezone = "UTC"
@@ -25,7 +25,7 @@ foreach ($site in $iissites) {
     }
     $iisErrLog = @{
         file_path = "C:/Windows/System32/LogFiles/HTTPERR/*.log"
-        log_group_name = "/iis/$varhostname"
+        log_group_name = "DevSecOps/iis/$varhostname"
         log_stream_name = "httpErrors"
         timestamp_format = "%Y-%m-%d %H:%M:%S"
         timezone = "UTC"
@@ -42,7 +42,7 @@ foreach ($event in $windowsLogs) {
         event_name = $event
         event_levels = $windowsLoglevel
         event_format ="text"
-        log_group_name = "/eventlog/$environment/$($event.ToLower())"
+        log_group_name = "DevSecOps/eventlogs/$environment/$($event.ToLower())"
         log_stream_name = $varhostname
         retention_in_days = [int]$winlogretention
         
