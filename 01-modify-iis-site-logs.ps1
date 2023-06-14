@@ -32,7 +32,7 @@ Set-ItemProperty IIS:\Sites\$($site.Name) -name logfile.logTargetW3C  -Value ($l
 Set-ItemProperty IIS:\Sites\$($site.Name) -Name logfile -Value @{logExtFileFlags = "Date,Time,ClientIP,UserName,SiteName,ComputerName,ServerIP,Method,UriStem,UriQuery,HttpStatus,BytesSent,BytesRecv,TimeTaken,ServerPort,UserAgent,Referer,ProtocolVersion,Host,HttpSubStatus"}
 }
 
-if ($xforwarded -eq "true") 
+if ($xforwarded -eq "enable") 
 {
 Write-Host "Enabling X-Forwarded-For logging option for Loadbalancer"
 Add-WebConfigurationProperty -PSPath 'MACHINE/WEBROOT/APPHOST' `
